@@ -1,0 +1,17 @@
+services:
+  coldchain:
+    build: .
+    container_name: coldchain-service
+    ports:
+      - "8000:8000"
+    environment:
+      # Over-temperature threshold (Celsius); two consecutive readings
+      # strictly above it open an interval.
+      TEMP_UPPER_LIMIT: "8.0"
+      DB_PATH: /data/coldchain.db
+    volumes:
+      - coldchain-data:/data
+    restart: unless-stopped
+
+volumes:
+  coldchain-data:
